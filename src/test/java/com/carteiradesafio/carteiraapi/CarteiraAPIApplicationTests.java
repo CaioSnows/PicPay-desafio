@@ -1,10 +1,10 @@
-package com.picpaydesafio.carteiraapi;
+package com.carteiradesafio.carteiraapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PicpayDesafioBackApplicationTests {
+class CarteiraAPIApplicationTests {
 
 	@Test
 	void contextLoads() {
