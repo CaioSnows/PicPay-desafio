@@ -1,4 +1,4 @@
-package com.picpaydesafio.picpaydesafioback;
+package com.picpaydesafio.carteiraapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

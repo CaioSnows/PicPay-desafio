@@ -1,4 +1,4 @@
-package com.picpaydesafio.picpaydesafioback.models;
+package com.picpaydesafio.carteiraapi.models;
 
 import javax.persistence.*;
 import java.io.Serial;

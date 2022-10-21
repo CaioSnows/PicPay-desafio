@@ -1,4 +1,4 @@
-package com.picpaydesafio.picpaydesafioback;
+package com.picpaydesafio.carteiraapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
