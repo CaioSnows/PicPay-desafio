@@ -1,4 +1,6 @@
-package com.carteiradesafio.carteiraapi.models;
+package com.carteiradesafio.carteiraapi.models.entities;
+
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -17,9 +19,13 @@ public class Usuario implements Serializable {
 
     private String nome;
 
+    @Column(unique = true)
     private String cpf;
 
+    @Column(unique = true)
     private String email;
+
+    private String senha;
 
     public long getId() {
         return id;
@@ -60,7 +66,5 @@ public class Usuario implements Serializable {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-    private String senha;
 
 }
