@@ -14,10 +14,4 @@ public class CarteiraApplication {
 		SpringApplication.run(CarteiraApplication.class, args);
 	}
 
-	@Bean
-	public PasswordEncoder getPassowordEncoder(){
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		return encoder;
-	}
-
 }

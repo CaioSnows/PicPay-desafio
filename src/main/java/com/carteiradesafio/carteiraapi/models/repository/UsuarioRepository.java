@@ -8,7 +8,4 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> { //JPARepository possui métodos de persistência de dados
 
     public Optional<Usuario> findById(long id);
-
-    Usuario findByCpf(String cpf);
-
 }

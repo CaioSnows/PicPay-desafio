@@ -1,6 +1,5 @@
 package com.carteiradesafio.carteiraapi.models.entities;
 
-import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.io.Serial;
