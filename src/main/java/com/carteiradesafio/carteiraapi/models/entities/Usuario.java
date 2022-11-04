@@ -1,10 +1,12 @@
 package com.carteiradesafio.carteiraapi.models.entities;
 
 
+import lombok.experimental.Accessors;
+
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
-
+@Accessors (chain = true)
 @Entity
 @Table(name = "TB_USUARIO")
 public class Usuario implements Serializable {

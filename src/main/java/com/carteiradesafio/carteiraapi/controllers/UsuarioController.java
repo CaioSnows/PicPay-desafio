@@ -1,5 +1,6 @@
 package com.carteiradesafio.carteiraapi.controllers;
 
+import com.carteiradesafio.carteiraapi.dto.UserDTO;
 import com.carteiradesafio.carteiraapi.models.entities.Usuario;
 import com.carteiradesafio.carteiraapi.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class UsuarioController {
     UsuarioService usuarioService;
 
     @GetMapping("/usuario")
-    public List<Usuario> listarUsuarios() {
+    public List<UserDTO> listarUsuarios() {
         return usuarioService.listaDeUsuarios();
     }
 
@@ -27,8 +28,8 @@ public class UsuarioController {
     }
 
     @PostMapping("/usuario")
-    public Usuario salvarUsuario(@RequestBody Usuario usuario) { // Receber o usuário como JSON no corpo da requisição
-        return usuarioService.create(usuario);
+    public void salvarUsuario(@RequestBody Usuario usuario) { // Receber o usuário como JSON no corpo da requisição
+         usuarioService.create(usuario);
     }
 
     @DeleteMapping(path = "/usuario/{id}")
@@ -42,10 +43,10 @@ public class UsuarioController {
     }
 
     @PutMapping("/usuario")
-    public Usuario atualizarUsuario(@RequestBody Usuario usuario) {
+    public void atualizarUsuario(@RequestBody Usuario usuario) {
         Optional<Usuario> usuario1 = usuarioService.procurar(usuario.getId());
         if (usuario1.isPresent()){
-            return usuarioService.atualizar(usuario);
+             usuarioService.atualizar(usuario);
         } else {
             throw new RuntimeException();
         }
