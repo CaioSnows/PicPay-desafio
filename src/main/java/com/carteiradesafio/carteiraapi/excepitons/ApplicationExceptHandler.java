@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ApplicationExceptHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<DefaultError> handleExcepition(Exception e){
+    public ResponseEntity<DefaultError> handleExcepition(Exception e) {
         log.info("Caiu no handler");
         log.info(e.getMessage());
 
@@ -23,10 +23,19 @@ public class ApplicationExceptHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(CPFException.class)
-    public ResponseEntity<DefaultError> CpfException(Exception e){
+    public ResponseEntity<DefaultError> CpfException(Exception e) {
         log.info("CPF INVÁLIDO");
 
-        DefaultError erro = new DefaultError(HttpStatus.BAD_REQUEST.value(), "CPF inválido");
+        DefaultError erro = new DefaultError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+
+        return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EmailException.class)
+    public ResponseEntity<DefaultError> EmailException(Exception e) {
+        log.info("EMAIL INVÁLIDO");
+
+        DefaultError erro = new DefaultError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
 
         return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
     }

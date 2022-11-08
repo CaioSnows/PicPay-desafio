@@ -3,6 +3,7 @@ package com.carteiradesafio.carteiraapi.services;
 import br.com.caelum.stella.validation.CPFValidator;
 import com.carteiradesafio.carteiraapi.dto.UserDTO;
 import com.carteiradesafio.carteiraapi.excepitons.CPFException;
+import com.carteiradesafio.carteiraapi.excepitons.EmailException;
 import com.carteiradesafio.carteiraapi.models.entities.Usuario;
 import com.carteiradesafio.carteiraapi.models.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -20,8 +20,12 @@ public class UsuarioService {
 
     public void create(Usuario usuario) {
         boolean cpf = validaCpf(usuario);
-        if (!cpf) {
-            throw new NullPointerException();
+        boolean verificacaoCpf = verificaCpf(usuario);
+        boolean vericacaoEmail = verificaEmail(usuario);
+        if (!cpf || !verificacaoCpf) {
+            throw new CPFException();
+        }else if (!vericacaoEmail) {
+            throw new EmailException();
         }
         usuarioRepository.save(usuario);
     }
@@ -43,14 +47,17 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-    public Optional<Usuario> procurar(long id) {
-        if (usuarioRepository.findById(id).isEmpty()) {
-            throw new RuntimeException("Usuario {id} não existe");
+    public UserDTO procurar(long id) {
+        if (usuarioRepository.findById(id) == null) {
+            throw new RuntimeException("Usuario não existe");
         }
-        return usuarioRepository.findById(id);
+
+        Usuario usuario1 = usuarioRepository.findById(id);
+
+        return new UserDTO(usuario1.getId(), usuario1.getNome(), usuario1.getCpf(), usuario1.getEmail());
     }
 
-    public void atualizar(Usuario usuario){
+    public void atualizar(Usuario usuario) {
         boolean cpf = validaCpf(usuario);
         if (!cpf) {
             throw new CPFException();
@@ -66,5 +73,31 @@ public class UsuarioService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public boolean verificaCpf(Usuario usuario){
+        List<Usuario> listaUsuario = usuarioRepository.findAll();
+
+        List<String> listaCpf = new ArrayList<>();
+        listaUsuario.forEach(usuario1 -> listaCpf.add(usuario1.getCpf()));
+
+        boolean validacao = listaCpf.contains(usuario.getCpf());
+        if (validacao){
+            throw new CPFException();
+        }
+        return true;
+    }
+
+    public boolean verificaEmail(Usuario usuario){
+        List<Usuario> listaUsuario = usuarioRepository.findAll();
+
+        List<String> listaEmail = new ArrayList<>();
+        listaUsuario.forEach(usuario1 -> listaEmail.add(usuario1.getEmail()));
+
+        boolean validacao = listaEmail.contains(usuario.getEmail());
+        if (validacao){
+            throw new CPFException();
+        }
+        return true;
     }
 }

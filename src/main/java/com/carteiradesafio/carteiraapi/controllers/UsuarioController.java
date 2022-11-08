@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/api") // Criando um URL
+@RequestMapping(value = "/api")
 public class UsuarioController {
 
     @Autowired
@@ -23,7 +22,7 @@ public class UsuarioController {
 
 
     @GetMapping("/usuario/{id}")
-    public Optional<Usuario> usuarioUnico(@PathVariable(value = "id") long id) {
+    public UserDTO usuarioUnico(@PathVariable(value = "id") long id) {
         return usuarioService.procurar(id);
     }
 
@@ -33,9 +32,9 @@ public class UsuarioController {
     }
 
     @DeleteMapping(path = "/usuario/{id}")
-    public void deletarUsuario(@PathVariable long id) { // Outra maneira de fazer o que o listaUsuarioUnico @Path faz
-        Optional<Usuario> usuario = usuarioService.procurar(id);
-        if(usuario.isPresent()){
+    public void deletarUsuario(@PathVariable long id) {
+        UserDTO usuario = usuarioService.procurar(id);
+        if(usuario != null){
             usuarioService.delete(id);
         }else {
             throw new RuntimeException();
@@ -44,8 +43,8 @@ public class UsuarioController {
 
     @PutMapping("/usuario")
     public void atualizarUsuario(@RequestBody Usuario usuario) {
-        Optional<Usuario> usuario1 = usuarioService.procurar(usuario.getId());
-        if (usuario1.isPresent()){
+        UserDTO usuario1 = usuarioService.procurar(usuario.getId());
+        if (usuario1 != null){
              usuarioService.atualizar(usuario);
         } else {
             throw new RuntimeException();
