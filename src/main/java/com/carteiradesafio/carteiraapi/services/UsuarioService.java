@@ -1,9 +1,10 @@
 package com.carteiradesafio.carteiraapi.services;
 
+import br.com.caelum.stella.validation.CNPJValidator;
 import br.com.caelum.stella.validation.CPFValidator;
 import com.carteiradesafio.carteiraapi.dto.UserDTO;
-import com.carteiradesafio.carteiraapi.excepitons.CPFException;
-import com.carteiradesafio.carteiraapi.excepitons.EmailException;
+import com.carteiradesafio.carteiraapi.exceptions.CPFException;
+import com.carteiradesafio.carteiraapi.exceptions.EmailException;
 import com.carteiradesafio.carteiraapi.models.entities.Usuario;
 import com.carteiradesafio.carteiraapi.models.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,12 @@ public class UsuarioService {
 
     public void create(Usuario usuario) {
         boolean cpf = validaCpf(usuario);
+        boolean cnpj = validaCnpj(usuario);
         boolean verificacaoCpf = verificaCpf(usuario);
         boolean vericacaoEmail = verificaEmail(usuario);
         if (!cpf || !verificacaoCpf) {
-            throw new CPFException();
+            if (!cnpj || !verificacaoCpf){
+            throw new CPFException();}
         }else if (!vericacaoEmail) {
             throw new EmailException();
         }
@@ -96,8 +99,18 @@ public class UsuarioService {
 
         boolean validacao = listaEmail.contains(usuario.getEmail());
         if (validacao){
-            throw new CPFException();
+            throw new EmailException();
         }
         return true;
+    }
+
+    public static boolean validaCnpj(Usuario usuario) {
+        CNPJValidator cnpjValidator = new CNPJValidator();
+        try {
+            cnpjValidator.assertValid(usuario.getCpf());
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

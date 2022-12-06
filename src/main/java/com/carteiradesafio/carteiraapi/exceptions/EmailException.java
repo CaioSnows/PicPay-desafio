@@ -1,4 +1,4 @@
-package com.carteiradesafio.carteiraapi.excepitons;
+package com.carteiradesafio.carteiraapi.exceptions;
 
 public class EmailException extends RuntimeException{
 

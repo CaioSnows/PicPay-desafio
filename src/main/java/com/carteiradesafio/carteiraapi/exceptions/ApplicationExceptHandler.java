@@ -1,4 +1,4 @@
-package com.carteiradesafio.carteiraapi.excepitons;
+package com.carteiradesafio.carteiraapi.exceptions;
 
 import com.carteiradesafio.carteiraapi.dto.DefaultError;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class ApplicationExceptHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(CPFException.class)
     public ResponseEntity<DefaultError> CpfException(Exception e) {
-        log.info("CPF INVÁLIDO");
+        log.info("CPF/CNPJ INVÁLIDO");
 
         DefaultError erro = new DefaultError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
 
