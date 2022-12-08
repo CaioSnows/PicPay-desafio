@@ -28,6 +28,18 @@ public class Usuario implements Serializable {
 
     private String senha;
 
+    private String tipoUsuario;
+
+
+
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
     public long getId() {
         return id;
     }

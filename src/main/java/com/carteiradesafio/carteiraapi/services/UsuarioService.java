@@ -30,6 +30,12 @@ public class UsuarioService {
         }else if (!vericacaoEmail) {
             throw new EmailException();
         }
+        int tamanhoDocumento = usuario.getCpf().length();
+        if(tamanhoDocumento == 11){
+            usuario.setTipoUsuario("Usuario");
+        } else {
+            usuario.setTipoUsuario("Lojista");
+        }
         usuarioRepository.save(usuario);
     }
 
