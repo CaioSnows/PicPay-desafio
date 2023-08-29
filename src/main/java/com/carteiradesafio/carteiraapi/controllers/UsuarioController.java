@@ -41,7 +41,7 @@ public class UsuarioController {
         }
     }
 
-    @PutMapping("/usuario")
+    @PutMapping("/usuarios")
     public void atualizarUsuario(@RequestBody Usuario usuario) {
         UserDTO usuario1 = usuarioService.procurar(usuario.getId());
         if (usuario1 != null){
